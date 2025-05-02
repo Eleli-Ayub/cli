@@ -52,3 +52,33 @@ func DeleteTask(title string) error {
 	}
 	return nil
 }
+
+func UpdateTaskStatus(title string, status string) error {
+	taskColl := DBClient.Database("taskdb").Collection("tasks")
+	
+	_, err := taskColl.UpdateOne(context.TODO(), bson.M{"title": title}, bson.M{"$set": bson.M{"status": status}})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateTaskPriority(title string, priority string) error {
+	taskColl := DBClient.Database("taskdb").Collection("tasks")
+	
+	_, err := taskColl.UpdateOne(context.TODO(), bson.M{"title": title}, bson.M{"$set": bson.M{"priority": priority}})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateTaskTitle(oldTitle string, newTitle string) error {
+	taskColl := DBClient.Database("taskdb").Collection("tasks")
+	
+	_, err := taskColl.UpdateOne(context.TODO(), bson.M{"title": oldTitle}, bson.M{"$set": bson.M{"title": newTitle}})
+	if err != nil {
+		return err
+	}
+	return nil
+}

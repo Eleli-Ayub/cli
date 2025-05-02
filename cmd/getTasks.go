@@ -11,14 +11,14 @@ var getTasksCmd = &cobra.Command{
 	Short: "get all tasks",
 	Long: "TODO()",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("-----------------Getting tasks----------------")
-		// Call the function to get tasks from the database
 		tasks, err := db.GetTasks()
 		if err != nil {
 			panic(err)
 		}
+		fmt.Println("-----------------Tasks Lists----------------")
+		fmt.Println("ID. Title")
 		for i, task := range tasks {
-			fmt.Printf("%d. Title: %s, Priority: %s, Status: %s\n", i + 1, task.Title, task.Priority, task.Status)
+			fmt.Printf("%d. %s (%s) -> %s\n", i + 1, task.Title, task.Priority, task.Status)
 		}
 	},
 }

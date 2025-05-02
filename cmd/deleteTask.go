@@ -7,7 +7,7 @@ import (
 )
 
 var deleteTaskCmd = &cobra.Command{
-	Use:   "deleteTask",
+	Use:   "delete-task",
 	Short: "Deleting tasks",
 	Long: "TODO()",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -16,15 +16,18 @@ var deleteTaskCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+
+		fmt.Println("-----------------Tasks Lists----------------")
+		fmt.Println("ID. Title")
 		for i, task := range tasks {
-			fmt.Printf("%d. Title: %s, Priority: %s, Status: %s\n", i + 1, task.Title, task.Priority, task.Status)
+			fmt.Printf("%d. %s (%s) -> %s\n", i + 1, task.Title, task.Priority, task.Status)
 		}
+
 		fmt.Println("Enter the number of the task you want to delete:")
 		var taskNumber int
 		fmt.Scanf("%d", &taskNumber)
 	
-		fmt.Printf("Confirm deleting task %s", tasks[taskNumber-1].Title)
-		fmt.Println(" (y/n)?")
+		fmt.Printf("Confirm deleting task %s \n(y/n)", tasks[taskNumber-1].Title)
 		smallInput := ""
 		fmt.Scanf("%s", &smallInput)
 		if smallInput == "y" {
