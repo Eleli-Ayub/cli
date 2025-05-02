@@ -1,40 +1,39 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
+	"bufio"
 	"fmt"
-
+	"strings"
 	"github.com/spf13/cobra"
+	"os"
+	"github.com/eleliayub/cli/db"
 )
 
-// addTasksCmd represents the addTasks command
-var addTasksCmd = &cobra.Command{
-	Use:   "addTasks",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+var addTasksCmd = &cobra.Command{
+	Use:   "add-task",
+	Short: "flag to add tasks",
+	Long:  "TODO()",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("addTasks called")
+		newTask := db.Task{}
+		fmt.Println("-----------------Adding task----------------")
+		fmt.Println("*Task Title")
+
+		reader := bufio.NewReader(os.Stdin)
+		newTask.Title, _ = reader.ReadString('\n')
+		newTask.Title = strings.TrimSuffix(newTask.Title, "\n")
+
+		fmt.Println("*Priority")
+		newTask.Priority, _ = reader.ReadString('\n')
+		newTask.Priority = strings.TrimSuffix(newTask.Priority, "\n")
+
+		if err := db.InsertTask(newTask); err != nil {
+			panic(err)
+		}
+		fmt.Println("Task added successfully")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(addTasksCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// addTasksCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addTasksCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

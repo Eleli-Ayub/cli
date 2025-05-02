@@ -1,20 +1,19 @@
 package cmd
 
 import (
-	"os"
 	"fmt"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var rootCmd = &cobra.Command{
 	Use:   "tasks",
 	Short: "Manage tasks on the terminal",
-	Long: `TODO(())`,
-	Run: func(cmd *cobra.Command, args []string){
+	Long:  `TODO(())`,
+	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("running root")
 	},
 }
-
 
 func Execute() {
 	err := rootCmd.Execute()
@@ -22,5 +21,3 @@ func Execute() {
 		os.Exit(1)
 	}
 }
-
-
