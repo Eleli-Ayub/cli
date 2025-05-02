@@ -42,3 +42,13 @@ func GetTasks() ([]Task, error) {
 	}
 	return tasks, nil
 }
+
+func DeleteTask(title string) error {
+	taskColl := DBClient.Database("taskdb").Collection("tasks")
+	
+	_, err := taskColl.DeleteOne(context.TODO(), bson.M{"title": title})
+	if err != nil {
+		return err
+	}
+	return nil
+}
